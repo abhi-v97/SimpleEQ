@@ -10,6 +10,30 @@
 
 #include <JuceHeader.h>
 
+// extracting parameters from treestate
+// data structure representing all parameter values to keep code clean
+
+enum Slope
+{
+    Slope_12,
+    Slope_24,
+    Slope_36,
+    Slope_48
+};
+
+struct ChainSettings
+{
+    float peakFreq{ 0 }, peakGainInDecibels{ 0 }, peakQuality{ 1.f };
+    float lowCutFreq{ 0 }, highCutFreq{ 0 };
+
+    Slope lowCutSlope{ Slope::Slope_12 }, highCutSlope{ Slope::Slope_12 };
+
+    bool lowCutBypassed{ false }, peakBypassed{ false }, highCutBypassed{ false };
+};
+
+// helper function that will return these values
+ChainSettings getChainSettings(juce::AudioProcessorValueTreeState& apvts);
+
 //==============================================================================
 /**
 */
@@ -72,6 +96,13 @@ private:
     // two instances of mono for stereo
     MonoChain leftChain, rightChain;
     
+
+    enum ChainPositions
+    {
+        LowCut, 
+        Peak,
+        HighCut
+    };
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleEQAudioProcessor)
 };
