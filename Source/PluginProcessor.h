@@ -308,6 +308,9 @@ private:
 
     void updateFilters();
 
+    // used to verify the accuracy of the spectrum analyser
+    juce::dsp::Oscillator<float> osc;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleEQAudioProcessor)
 };
