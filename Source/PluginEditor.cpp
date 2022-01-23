@@ -23,10 +23,13 @@ void LookAndFeel::drawRotarySlider(juce::Graphics& g,
 
     auto enabled = slider.isEnabled();
 
+    // colour of inner part of slider
     g.setColour(enabled ? Colour(190u, 183u, 255u) : Colours::darkgrey);
     g.fillEllipse(bounds);
 
-    g.setColour(enabled ? Colour(255u, 154u, 1u) : Colours::grey);
+
+    // set slider dial colour, and outline
+    g.setColour(enabled ? Colour(255u, 246u, 153u) : Colours::grey);
     g.drawEllipse(bounds, 1.f);
 
     if (auto* rswl = dynamic_cast<RotarySliderWithLabels*>(&slider))
@@ -58,6 +61,7 @@ void LookAndFeel::drawRotarySlider(juce::Graphics& g,
         r.setSize(strWidth + 4, rswl->getTextHeight() + 2);
         r.setCentre(bounds.getCentre());
 
+        // slider box colour
         g.setColour(enabled ? Colours::black : Colours::darkgrey);
         g.fillRect(r);
 
@@ -103,7 +107,8 @@ void LookAndFeel::drawToggleButton(juce::Graphics& g,
 
         PathStrokeType pst(2.f, PathStrokeType::JointStyle::curved);
 
-        auto color = toggleButton.getToggleState() ? Colours::dimgrey : Colour(0u, 172u, 1u);
+        // toggle button colour
+        auto color = toggleButton.getToggleState() ? Colours::dimgrey : Colour(98u, 255u, 223u);
 
         g.setColour(color);
         g.strokePath(powerButton, pst);
@@ -111,7 +116,7 @@ void LookAndFeel::drawToggleButton(juce::Graphics& g,
     }
     else if (auto* analyzerButton = dynamic_cast<AnalyzerButton*>(&toggleButton))
     {
-        auto color = !toggleButton.getToggleState() ? Colours::dimgrey : Colour(0u, 172u, 1u);
+        auto color = !toggleButton.getToggleState() ? Colours::dimgrey : Colour(98u, 255u, 223u);
 
         g.setColour(color);
 
@@ -153,7 +158,7 @@ void RotarySliderWithLabels::paint(juce::Graphics& g)
     auto center = sliderBounds.toFloat().getCentre();
     auto radius = sliderBounds.getWidth() * 0.5f;
 
-    g.setColour(Colour(0u, 172u, 1u));
+    g.setColour(Colour(98u, 255u, 223u));
     g.setFont(getTextHeight());
 
 
@@ -382,7 +387,7 @@ void ResponseCurveComponent::paint(juce::Graphics& g)
 {
     using namespace juce;
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(Colours::black);
+    g.fillAll(Colours::darkslategrey);
 
     g.drawImage(background, getLocalBounds().toFloat());
 
@@ -527,7 +532,7 @@ void ResponseCurveComponent::resized()
         //        g.drawHorizontalLine(y, 0, getWidth());
 
         // green line to indicate zero
-        g.setColour(gDb == 0.f ? Colour(0u, 172u, 1u) : Colours::darkgrey);
+        g.setColour(gDb == 0.f ? Colour(98u, 255u, 223u) : Colours::darkgrey);
         g.drawHorizontalLine(y, left, right);
     }
 
@@ -583,7 +588,7 @@ void ResponseCurveComponent::resized()
         r.setX(getWidth() - textWidth);
         r.setCentre(r.getCentreX(), y);
 
-        g.setColour(gDb == 0.f ? Colour(0u, 172u, 1u) : Colours::lightgrey);
+        g.setColour(gDb == 0.f ? Colour(98u, 255u, 223u) : Colours::lightgrey);
 
         g.drawFittedText(str, r, juce::Justification::centred, 1);
 
@@ -747,7 +752,7 @@ void SimpleEQAudioProcessorEditor::paint(juce::Graphics& g)
 {
     using namespace juce;
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll(Colours::black);
+    g.fillAll(Colours::darkslategrey);
 }
 
 void SimpleEQAudioProcessorEditor::resized()
@@ -786,6 +791,7 @@ void SimpleEQAudioProcessorEditor::resized()
     highCutFreqSlider.setBounds(highCutArea.removeFromTop(highCutArea.getHeight() * 0.5));
     highCutSlopeSlider.setBounds(highCutArea);
 
+    peakBypassButton.setBounds(bounds.removeFromTop(25));
     peakFreqSlider.setBounds(bounds.removeFromTop(bounds.getHeight() * 0.33));
     peakGainSlider.setBounds(bounds.removeFromTop(bounds.getHeight() * 0.5));
     peakQualitySlider.setBounds(bounds);
